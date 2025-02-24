@@ -1,0 +1,20 @@
+## IDEs
+.idea
+.vscode
+
+## Backup Files
+**/*.bak*
+**/*.backup*
+
+## vim temp files
+*.swp
+
+## Python temp files
+**/__pycache__
+**/*.py[cod]
+
+## Virtual environments
+venv/
+
+## project files
+env.local

@@ -1,0 +1,3 @@
+if [ -z "${_MARBLE_NODE_SETTINGS_NODE_NAME_FROM_REGISTRY}" ]; then
+    log WARN "This node does not appear in the Marble Node Registry. If you have recently updated the domain name where this node is publicly available, please ensure that the URL in the registry is up to date."
+fi
