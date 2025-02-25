@@ -20,20 +20,10 @@ if [ -n "${MARBLE_NODE_SETTINGS_NODE_NAME}" ]; then
     _MARBLE_FRONTEND_TMP_ENV_FILE="${TMPDIR:-/tmp}/marble-frontend-temp-env-file-$(date -u +%s)"
     echo "${MARBLE_FRONTEND_ENV_VARS}" | tr ';' \\n  > "${_MARBLE_FRONTEND_TMP_ENV_FILE}"
     _MARBLE_FRONTEND_INCLUDE_ENV_FILE="--env-file=${_MARBLE_FRONTEND_TMP_ENV_FILE}"
-    cat "${_MARBLE_FRONTEND_TMP_ENV_FILE}"
 fi
-
-# clean up extra semicolons if they exist
-# MARBLE_FRONTEND_ENV_VARS=$(echo "$MARBLE_FRONTEND_ENV_VARS" | tr -s ';')
-# MARBLE_FRONTEND_ENV_VARS=${MARBLE_FRONTEND_ENV_VARS%;}
-# MARBLE_FRONTEND_ENV_VARS=${MARBLE_FRONTEND_ENV_VARS#;}
-
-# if [ -n "$MARBLE_FRONTEND_ENV_VARS" ]; then
-#     MARBLE_FRONTEND_ENV_VARS="-e $(echo "\"${MARBLE_FRONTEND_ENV_VARS}\"" | sed 's/;/" -e "/g')"
-# fi
 
 if [ -n "$MARBLE_FRONTEND_CONFIG_FILE" ]; then
     MARBLE_FRONTEND_CONFIG_VOLUME="-v $(readlink -f "$MARBLE_FRONTEND_CONFIG_FILE" || realpath "$MARBLE_FRONTEND_CONFIG_FILE"):/config.toml"
 fi
 
-(set -x; docker run --rm ${_MARBLE_FRONTEND_INCLUDE_ENV_FILE} -v "${MARBLE_FRONTEND_SOURCE_DIR}:/marble-frontend:ro" -v "${MARBLE_FRONTEND_BUILD_DIR}:/build-dir" ${MARBLE_FRONTEND_CONFIG_VOLUME} "${MARBLE_FRONTEND_PYTHON_IMAGE}" sh -c 'pip install -r /marble-frontend/requirements.txt && python /marble-frontend/build.py --clean --build-directory /build-dir --config-file /config.toml')
+docker run --rm ${_MARBLE_FRONTEND_INCLUDE_ENV_FILE} -v "${MARBLE_FRONTEND_SOURCE_DIR}:/marble-frontend:ro" -v "${MARBLE_FRONTEND_BUILD_DIR}:/build-dir" ${MARBLE_FRONTEND_CONFIG_VOLUME} "${MARBLE_FRONTEND_PYTHON_IMAGE}" sh -c 'pip install -r /marble-frontend/requirements.txt && python /marble-frontend/build.py --clean --build-directory /build-dir --config-file /config.toml'
