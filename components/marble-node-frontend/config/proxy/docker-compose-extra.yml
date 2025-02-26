@@ -1,0 +1,4 @@
+services:
+  proxy:
+    volumes:
+    - ${MARBLE_FRONTEND_COMPONENT_DIR}/config/proxy/conf.extra-service.d:/etc/nginx/conf.extra-service.d/marble-node-frontend:ro

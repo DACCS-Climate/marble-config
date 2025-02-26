@@ -80,6 +80,9 @@ Note that this string should not contain double quotation marks (`"`).
 
 For details on configuration options see the [marble node frontend documentation](https://github.com/DACCS-Climate/marble-node-frontend).
 
+Once enabled, the webite will be available at the location specified by `BIRDHOUSE_FQDN_PUBLIC` at the `/marble/`
+sub-path.
+
 ### Marble Node Settings
 
 This component accesses the [Marble Node Registry](https://github.com/DACCS-Climate/Marble-node-registry) and sets
