@@ -1,3 +1,3 @@
-if [ "${JUPYTERHUB_DOCKER_NOTEBOOK_IMAGES#*"${MARBLE_JUPYTERLAB_IMAGE}"}" != "${JUPYTERHUB_DOCKER_NOTEBOOK_IMAGES}" ]; then
+if [ "${JUPYTERHUB_DOCKER_NOTEBOOK_IMAGES#*"${MARBLE_JUPYTERLAB_IMAGE}"}" = "${JUPYTERHUB_DOCKER_NOTEBOOK_IMAGES}" ]; then
     log WARN "The marble-jupyter-image component is enabled but the ${MARBLE_JUPYTERLAB_IMAGE} is not included in the JUPYTERHUB_DOCKER_NOTEBOOK_IMAGES variable. If this is intentional, ignore this warning. Otherwise you may have unintentionally overwritten this setting in your local environment file."
 fi
