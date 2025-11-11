@@ -1,0 +1,13 @@
+
+    location /marble-api/ {
+        proxy_pass ${BIRDHOUSE_PROXY_SCHEME}://${BIRDHOUSE_FQDN_PUBLIC}${TWITCHER_PROTECTED_PATH}/marble-api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Host $host:$server_port;
+        proxy_buffering off;
+        include /etc/nginx/conf.d/cors.include;
+    }
+
+    location = /marble-api {
+        return 301 /marble-api/$is_args$args;
+    }

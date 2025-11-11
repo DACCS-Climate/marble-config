@@ -1,0 +1,48 @@
+providers:
+  marble-api:
+    url: http://marble-api:8000
+    title: marble-api
+    public: true
+    c4i: false
+    type: api 
+    sync_type: api
+    hooks:
+      # This hook denies access to the /v1/users/{user_name}/ paths unless the logged user
+      # has a user name that matches {user_name}.
+      - type: request
+        path: /v1/users/.*
+        method: '*'
+        target: /opt/birdhouse/src/magpie/hooks/marble_api_hooks.py:check_user_access
+        
+permissions:
+  # Deny everyone access to the /v1/admin path except for users in the marble-api-admin group
+  - service: marble-api
+    resource: /v1/admin
+    permission:
+      name: read
+      access: deny
+      scope: recursive
+    group: anonymous
+  - service: marble-api
+    resource: /v1/admin
+    permission:
+      name: write
+      access: deny
+      scope: recursive
+    group: anonymous
+  - service: marble-api
+    resource: /v1/admin
+    permission:
+      name: read
+      access: allow
+      scope: recursive
+    group: marble-api-admin
+    action: create
+  - service: marble-api
+    resource: /v1/admin
+    permission:
+      name: write
+      access: allow
+      scope: recursive
+    group: marble-api-admin
+    action: create

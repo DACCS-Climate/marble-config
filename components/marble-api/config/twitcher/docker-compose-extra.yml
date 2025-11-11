@@ -1,0 +1,8 @@
+
+services:
+  twitcher:
+    volumes:
+      # NOTE: MagpieAdapter hooks are defined within Magpie config, but it is actually Twitcher proxy that runs them
+      # target mount location depends on 'MAGPIE_PROVIDERS_CONFIG_PATH' environment variable that is found under `birdhouse/components/twitcher/docker-compose-extra.yml`
+      - ${MARBLE_API_COMPONENT_DIR}/config/magpie/config.yml:/opt/birdhouse/src/magpie/config/marble-api-config.yml:ro
+      - ${MARBLE_API_COMPONENT_DIR}/config/magpie/hooks.py:/opt/birdhouse/src/magpie/hooks/marble_api_hooks.py:ro

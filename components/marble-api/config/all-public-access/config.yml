@@ -1,0 +1,15 @@
+permissions:
+  - service: marble-api
+    resource: /
+    permission:
+      name: read
+      access: allow
+      scope: recursive
+    group: anonymous
+  - service: marble-api
+    resource: /
+    permission:
+      name: write
+      access: allow
+      scope: recursive
+    group: anonymous

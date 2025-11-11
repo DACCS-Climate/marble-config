@@ -1,0 +1,50 @@
+x-logging:
+  &default-logging
+  driver: "json-file"
+  options:
+    max-size: "50m"
+    max-file: "10"
+
+services:
+  marble-api:
+    image: ${MARBLE_API_IMAGE}
+    container_name: marble-api
+    restart: always
+    logging: *default-logging
+    environment:
+      - MONGODB_URI=mongodb://marble-api-mongo:27017
+    networks:
+      - default
+      - marble-api-mongodb
+    healthcheck:
+      test: [
+        "CMD",
+        "python",
+        "-c",
+        "import urllib.request; urllib.request.urlopen('http://localhost:8000/')"
+      ]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      start_interval: 5s
+
+  marble-api-mongo:
+    image: mongo:${MARBLE_API_MONGO_VERSION}
+    container_name: marble-api-mongo
+    restart: always
+    volumes:
+      - ${MARBLE_API_DATA_DIR}:/data/db
+    networks:
+      - marble-api-mongodb
+    logging: *default-logging
+    healthcheck:
+      test: ["CMD", "mongo", "--eval", "print('connected')"]
+      interval: 60s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+      start_interval: 5s
+
+networks:
+  marble-api-mongodb: {}
