@@ -1,0 +1,5 @@
+services:
+  magpie:
+    volumes:
+      - ${MARBLE_API_COMPONENT_DIR}/config/magpie/config.yml:${MAGPIE_PROVIDERS_CONFIG_PATH}/marble-api.yml:ro
+      - ${MARBLE_API_COMPONENT_DIR}/config/magpie/config.yml:${MAGPIE_PERMISSIONS_CONFIG_PATH}/marble-api.yml:ro

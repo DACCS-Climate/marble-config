@@ -102,3 +102,9 @@ Note that this component will automatically match the current node to one entry 
 associated with a URL that matches those variables, it will raise an error.
 
 This component is only useful for birdhouse deployments that are registered with the [Marble Node Registry](https://github.com/DACCS-Climate/Marble-node-registry).
+
+### Marble-API
+
+This component enables a [Marble-API](https://github.com/DACCS-Climate/marble-api) instance and sets appropriate authorization rules for the
+various endpoints through `Magpie` configurations.
+
