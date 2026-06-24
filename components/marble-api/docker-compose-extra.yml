@@ -1,18 +1,11 @@
-x-logging:
-  &default-logging
-  driver: "json-file"
-  options:
-    max-size: "50m"
-    max-file: "10"
-
 services:
   marble-api:
     image: ${MARBLE_API_IMAGE}
     container_name: marble-api
     restart: always
-    logging: *default-logging
     environment:
-      - MONGODB_URI=mongodb://marble-api-mongo:27017
+      - MARBLE_API_MONGODB_URI=mongodb://marble-api-mongo:27017
+      - MARBLE_API_MAGPIE_URL=http://magpie:2001
     networks:
       - default
       - marble-api-mongodb
@@ -38,7 +31,6 @@ services:
       - ${MARBLE_API_DATA_DIR}:/data/db
     networks:
       - marble-api-mongodb
-    logging: *default-logging
     healthcheck:
       test: ["CMD", "mongo", "--eval", "print('connected')"]
       interval: 60s
