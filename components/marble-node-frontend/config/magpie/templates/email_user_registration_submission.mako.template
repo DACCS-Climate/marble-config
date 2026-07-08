@@ -1,0 +1,36 @@
+From: ${email_sender}
+To: ${email_recipient}
+Subject: User Registration to Marble
+Content-Type: text/html; charset=UTF-8
+
+<html lang="en">
+    <head><title>User Registration to Marble</title></head>
+    <body>
+        <p>
+        Dear ${user.user_name},
+        </p>
+
+        <p>
+        Your new account request submitted to ${BIRDHOUSE_FQDN_PUBLIC} has been received.
+        Please confirm your registration email by <a href="${confirm_url}">clicking this link</a>.
+        </p>
+
+        %if "${MARBLE_FRONTEND_REGISTRATION_FORM_LINK}":
+        <p>
+        Please also fill in the user registration form by <a href="${MARBLE_FRONTEND_REGISTRATION_FORM_LINK}">clicking this link</a>.
+        </p>
+        %endif
+
+        <p>
+        %if approval_required:
+        Following email validation, an administrator will review your profile for approval.<br>
+        Another confirmation email will be sent to notify you when your profile is approved and ready to be used.<br>
+        %else:
+        Following email validation, you will be able to <a href="${BIRDHOUSE_FQDN_PUBLIC}/magpie/login_redirect.html">Login</a> using your credentials.<br>
+        %endif
+        </p>
+
+        Regards,<br>
+        ${email_user}
+    </body>
+</html>

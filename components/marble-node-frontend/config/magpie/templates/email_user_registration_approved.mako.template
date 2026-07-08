@@ -1,0 +1,12 @@
+From: ${email_sender}
+To: ${email_recipient}
+Subject: Marble User Registration Approved
+Content-Type: text/plain; charset=UTF-8
+
+Dear ${user.user_name},
+
+Your account request submitted at ${BIRDHOUSE_FQDN_PUBLIC} has been approved.
+You should be able to login using your credentials at ${BIRDHOUSE_PROXY_SCHEME}://${BIRDHOUSE_FQDN_PUBLIC}/marble/login_redirect.html .
+
+Regards,
+${email_user}

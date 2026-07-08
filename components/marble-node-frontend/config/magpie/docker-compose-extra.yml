@@ -1,0 +1,4 @@
+services:
+  magpie:
+    volumes:
+      - ${MARBLE_FRONTEND_COMPONENT_DIR}/config/magpie/templates:/marble/templates:ro
