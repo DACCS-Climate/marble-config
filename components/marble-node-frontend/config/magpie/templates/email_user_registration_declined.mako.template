@@ -1,0 +1,14 @@
+From: ${email_sender}
+To: ${email_recipient}
+Subject: Marble User Registration Declined
+Content-Type: text/plain; charset=UTF-8
+
+Dear ${user.user_name},
+
+Your account request submitted at ${BIRDHOUSE_FQDN_PUBLIC} has been declined.
+
+Please communicate with the administrator directly using provided
+platform contact information if this is believed to be an error.
+
+Regards,
+${email_user}
