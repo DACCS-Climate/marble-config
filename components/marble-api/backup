@@ -1,0 +1,13 @@
+backup_application() {
+  _do_backup() {
+    ${BIRDHOUSE_EXE} --quiet compose run --user=root --rm -v ${BIRDHOUSE_BACKUP_VOLUME}:/backup --entrypoint sh marble-api-mongo -c "mkdir -p /backup/marble-api && chmod g+w /backup/marble-api/ && su -c 'mongodump --host=marble-api-mongo --out=/backup/marble-api/' --shell=/bin/sh mongodb"
+  }
+  backup_create_runner 'marble-api mongodb database' _do_backup 'marble-api'
+}
+
+restore_application() {
+  _do_restore() {
+    ${BIRDHOUSE_EXE} --quiet compose run --rm -v ${BIRDHOUSE_BACKUP_VOLUME}:/backup --entrypoint sh marble-api-mongo -c "mongorestore --host=marble-api-mongo --drop --dir /backup/marble-api/"
+  }
+  backup_restore_runner 'marble-api mongodb database' _do_restore 'marble-api' 'marble-api'
+}

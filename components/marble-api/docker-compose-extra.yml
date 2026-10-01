@@ -24,7 +24,7 @@ services:
       start_interval: 5s
 
   marble-api-mongo:
-    image: mongo:${MARBLE_API_MONGO_VERSION}
+    image: ${MARBLE_API_MONGO_IMAGE}
     container_name: marble-api-mongo
     restart: always
     volumes:
