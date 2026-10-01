@@ -1,0 +1,24 @@
+# Enable encrypted data at rest if MARBLE_API_ENABLE_ENCRYPTION=true
+
+if [ "${MARBLE_API_ENABLE_ENCRYPTION}" = "true" ]; then
+    if [ ! -f "${MARBLE_API_ENCRYPTION_KEY_FILE}" ]; then
+        log ERROR "MARBLE_API_ENCRYPTION_KEY_FILE reference an existing file to enable encryption at rest for marble api"
+        exit 1
+    fi
+
+    case "$(stat -c '%a' "${MARBLE_API_ENCRYPTION_KEY_FILE}")" in
+        400|600) ;;
+        *)
+            log WARN "${MARBLE_API_ENCRYPTION_KEY_FILE} must have permissions set to 400 or 600. The marble-api mongodb server may not start as expected."
+        ;;
+    esac
+
+    THIS_COMPOSE_FILE="${MARBLE_API_COMPONENT_DIR}/docker-compose-encrypt.yml"
+
+    COMPOSE_CONF_LIST="${COMPOSE_CONF_LIST} -f ${THIS_COMPOSE_FILE}"
+
+    log INFO "adding ${THIS_COMPOSE_FILE} to COMPOSE_CONF_LIST"
+
+    unset THIS_COMPOSE_FILE
+fi
+

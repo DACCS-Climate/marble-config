@@ -108,3 +108,30 @@ This component is only useful for birdhouse deployments that are registered with
 This component enables a [Marble-API](https://github.com/DACCS-Climate/marble-api) instance and sets appropriate authorization rules for the
 various endpoints through `Magpie` configurations.
 
+Marble API supports storing encrypted data at rest in an encrypted mongodb database. In order to enable this
+set the `MARBLE_API_ENABLE_ENCRYPTION` variable to `"true"` in the local environment file and create a 
+key file used to encrypt the data:
+
+```sh
+# create a key file (NOTE: use an absolute path so that the birdhouse scripts can find it easily)
+openssl rand -base64 32 > /path/to/mongodb.key
+# set appropriate permissions on the file
+chmod 600 /path/to/mongodb.key
+# update local environment file
+echo 'export MARBLE_API_ENABLE_ENCRYPTION=true' >> /path/to/env.local
+echo 'export MARBLE_API_ENCRYPTION_KEY_FILE=/path/to/mongodb.key' >> /path/to/env.local
+# start birdhouse
+birdhouse compose up -d
+```
+
+If you have unencrypted data already in your marble-api database and you want to encrypt it, you can
+backup and restore the data into an encrypted database:
+
+```sh
+# backup the data
+birdhouse backup create -a marble-api --no-restic
+# stop the server
+birdhouse compose down
+# create an encryption key and restart the server (see code block above)
+birdhouse backup restore -a marble-api --no-restic
+```
